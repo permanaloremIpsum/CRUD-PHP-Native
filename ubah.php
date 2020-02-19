@@ -1,3 +1,26 @@
+<?php 
+require 'functions.php';
+
+//ambil data di url
+$id = $_GET["id"];
+
+//query data mahasiswa
+$mhs = query("SELECT * FROM mahasiswa WHERE id=$id")[0];
+
+// cek tombol submit ditekan
+if (isset($_POST["submit"])) {
+  // cek data berhasil diubah atau tidak
+  if (ubah($_POST) > 0){
+    echo "<script>
+          alert('Data Berhasil Diubah');
+          document.location.href = 'index.php';
+        </script>";
+
+  } else {
+    echo "Data Gagal Diubah";
+  }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -200,47 +223,49 @@
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-
+                    <form action="" method="post" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" enctype="multipart/form-data">
+                      <input type="hidden" name="id" value="<?= $mhs["id"] ?>">
+                      <input type="hidden" name="gambarLama" value="<?= $mhs["gambar"] ?>">
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">NIM <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" required="required" name="nim" class="form-control col-md-7 col-xs-12">
+                          <input type="text" required="required" name="nim" id="nim" class="form-control col-md-7 col-xs-12" value="<?= $mhs["nim"] ?>">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Nama <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" required="required" name="name" class="form-control col-md-7 col-xs-12">
+                          <input type="text" required="required" name="nama" id="nama" class="form-control col-md-7 col-xs-12" value="<?= $mhs["nama"] ?>">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Email <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" required="required" name="email" class="form-control col-md-7 col-xs-12">
+                          <input type="text" required="required" name="email" class="form-control col-md-7 col-xs-12" value="<?= $mhs["email"] ?>">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Jurusan <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" required="required" name="jurusan" class="form-control col-md-7 col-xs-12">
+                          <input type="text" required="required" name="jurusan" id="jurusan" class="form-control col-md-7 col-xs-12" value="<?= $mhs["jurusan"] ?>">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Gambar</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="file" name="gambar" class="form-control col-md-7 col-xs-12">
+                          <img src="dashboard/img/<?= $mhs['gambar'] ?>" alt="" width=100><br>
+                          <input type="file" name="gambar" id="gambar" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                           <a href="index.php" type="button" class="btn btn-primary"><i class="fa fa-rotate-left"></i> Kembali</a>
-                          <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Simpan</button>
+                          <button type="submit" name="submit" class="btn btn-success"><i class="fa fa-save"></i> Simpan</button>
                         </div>
                       </div>
 

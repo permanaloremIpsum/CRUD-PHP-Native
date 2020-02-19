@@ -222,7 +222,7 @@ $mahasiswa = query("SELECT * FROM mahasiswa")
                               <tr>
                                 <td scope="row" class="col-md-1"><?= $i ?></td>
                                 <td class="col-md-1">
-                                  <a href="ubah.php"><span class="label label-info">Ubah</span></a>
+                                  <a href="ubah.php?id=<?= $row["id"]; ?>"><span class="label label-info">Ubah</span></a>
                                   <a href="hapus.php?id=<?= $row["id"]; ?>" onclick="return confirm('Apakah anda ingin mengahapus?');"><span class="label label-danger">Delete</span></a>
                                 </td>
                                 <td class="col-md-2 text-center"><img src="dashboard/img/<?= $row["gambar"]; ?>" alt="" width="50"></td>
