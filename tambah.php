@@ -1,3 +1,21 @@
+<?php 
+require 'functions.php';
+// cek tombol submit ditekan
+if (isset($_POST["submit"])) {
+  // cek data berhasil ditambahkan atau tidak
+  if (tambah($_POST) > 0){
+    echo "<script>
+          alert('Data Berhasil Ditambahkan');
+          document.location.href = 'index.php';
+        </script>";
+
+  } else {
+    echo "<script>
+          alert('Data Gagal Ditambahkan');
+        </script>";
+  }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -200,20 +218,20 @@
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                    <form action="" method="post" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" enctype="multipart/form-data">
 
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">NIM <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" required="required" name="nim" class="form-control col-md-7 col-xs-12">
+                          <input type="text" required="required" name="nim" id="nim" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Nama <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" required="required" name="name" class="form-control col-md-7 col-xs-12">
+                          <input type="text" required="required" name="nama" id="nama" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="form-group">
@@ -227,20 +245,20 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Jurusan <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" required="required" name="jurusan" class="form-control col-md-7 col-xs-12">
+                          <input type="text" required="required" name="jurusan" id="jurusan" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Gambar</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="file" name="gambar" class="form-control col-md-7 col-xs-12">
+                          <input type="file" name="gambar" id="gambar" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                           <a href="index.php" type="button" class="btn btn-primary"><i class="fa fa-rotate-left"></i> Kembali</a>
-                          <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Simpan</button>
+                          <button type="submit" name="submit" class="btn btn-success"><i class="fa fa-save"></i> Simpan</button>
                         </div>
                       </div>
 
