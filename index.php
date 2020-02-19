@@ -1,3 +1,8 @@
+<?php 
+require 'functions.php';
+$mahasiswa = query("SELECT * FROM mahasiswa")
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -212,19 +217,22 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td scope="row" class="col-md-1">1</td>
-                            <td class="col-md-1">
-                              <a href="ubah.php"><span class="label label-info">Ubah</span></a>
-                              <a href=""></a><span class="label label-danger">Delete</span></a>
-                            </td>
-                            <td class="col-md-2 text-center">dede.jpg</td>
-                            <td class="col-md-2">18.11.1825</td>
-                            <td class="col-md-3">Dede Permana</td>
-                            <td class="col-md-3">dede@gmail.com</td>
-                            <td class="col-md-2">S1 Informatika</td>
-                          </tr>
-                          
+                          <?php $i = 1; ?>
+                            <?php foreach ($mahasiswa as $row) : ?>
+                              <tr>
+                                <td scope="row" class="col-md-1"><?= $i ?></td>
+                                <td class="col-md-1">
+                                  <a href="ubah.php"><span class="label label-info">Ubah</span></a>
+                                  <a href=""></a><span class="label label-danger">Delete</span></a>
+                                </td>
+                                <td class="col-md-2 text-center"><img src="dashboard/img/<?= $row["gambar"]; ?>" alt="" width="50"></td>
+                                <td class="col-md-2"><?= $row["nim"]; ?></td>
+                                <td class="col-md-3"><?= $row["nama"]; ?></td>
+                                <td class="col-md-3"><?= $row["email"]; ?></td>
+                                <td class="col-md-2"><?= $row["jurusan"]; ?></td>
+                              </tr>
+                            <?php $i++; ?>
+                          <?php endforeach; ?>
                         </tbody>
                       </table>
                     </div>
