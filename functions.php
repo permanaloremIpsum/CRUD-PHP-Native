@@ -79,4 +79,10 @@ function upload(){
 	return $namaFileBaru;
 }
 
+function hapus($id){
+	global $db;
+	mysqli_query($db, "DELETE FROM mahasiswa WHERE id=$id");
+	return mysqli_affected_rows($db);
+}
+
 ?>
