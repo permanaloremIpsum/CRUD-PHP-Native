@@ -1,6 +1,11 @@
 <?php 
 require 'functions.php';
-$mahasiswa = query("SELECT * FROM mahasiswa")
+$mahasiswa = query("SELECT * FROM mahasiswa");
+
+//jika tombol cari ditekan
+if(isset($_POST["cari"])) {
+  $mahasiswa = cari($_POST["keyword"]);
+}
 ?>
 
 <!DOCTYPE html>
@@ -182,12 +187,14 @@ $mahasiswa = query("SELECT * FROM mahasiswa")
 
               <div class="title_right">
                 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
-                    <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">Go!</button>
-                    </span>
-                  </div>
+                  <form action="" method="post">
+                    <div class="input-group">
+                      <input type="text" name="keyword" class="form-control" placeholder="Search for..." autocomplete="off">
+                      <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit" name="cari">Go!</button>
+                      </span>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
