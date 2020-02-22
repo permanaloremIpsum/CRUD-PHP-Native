@@ -1,4 +1,10 @@
 <?php 
+session_start();
+
+if(!isset($_SESSION["login"])){
+  header("Location: login.php");
+  exit;
+}
 require 'functions.php';
 $mahasiswa = query("SELECT * FROM mahasiswa");
 
@@ -72,7 +78,7 @@ if(isset($_POST["cari"])) {
                 <h3>Menu</h3>
                 <ul class="nav side-menu">
                   <li><a href="index.php"><i class="fa fa-users"></i> Manajemen User </a></li>
-                  <li><a href="dashboard.html"><i class="fa fa-home"></i> Logout </a></li>
+                  <li><a href="logout.php"><i class="fa fa-home"></i> Logout </a></li>
                 </ul>
               </div>
 
