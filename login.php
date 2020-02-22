@@ -1,3 +1,26 @@
+<?php 
+require 'functions.php';
+
+if(isset($_POST["login"])){
+	$username = $_POST["username"];
+	$password = $_POST["password"];
+
+	$result = mysqli_query($db, "SELECT * FROM user WHERE username = '$username'");
+
+	// cek username
+	if(mysqli_num_rows($result) === 1){
+		// cek password
+		$row = mysqli_fetch_assoc($result);
+		if(password_verify($password, $row["password"])){
+			header("Location: index.php");
+			exit;
+		}
+	}
+
+	$error = true;
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,10 +53,14 @@
 					<img src="dashboard/img/img-01.png" alt="IMG">
 				</div>
 
-				<form class="login100-form validate-form">
+				<form class="login100-form validate-form" action="" method="post">
 					<span class="login100-form-title">
 						Halaman Login
 					</span>
+
+					<?php if(isset($error)) : ?>
+						<p class="notif">username / password salah</p>
+					<?php endif ?>
 
 					<div class="wrap-input100 validate-input" data-validate = "Username is required">
 						<input class="input100" type="text" name="username" placeholder="Username">
@@ -44,7 +71,7 @@
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate = "Password is required">
-						<input class="input100" type="password" name="pass" placeholder="Password">
+						<input class="input100" type="password" name="password" placeholder="Password">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
@@ -59,7 +86,7 @@
 					</div>
 					
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
+						<button class="login100-form-btn" type="submit" name="login">
 							Login
 						</button>
 					</div>
