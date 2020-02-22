@@ -1,3 +1,19 @@
+<?php 
+require 'functions.php';
+
+if(isset($_POST["register"])){
+	if(registrasi($_POST) > 0){
+		echo "<script>
+					alert('User Berhasil Ditambahkan');
+					window.location.replace('login.php');
+			  </script>";
+	} else {
+		//echo mysql_error($db);
+	}
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,7 +46,7 @@
 					<img src="dashboard/img/img-01.png" alt="IMG">
 				</div>
 
-				<form class="login100-form validate-form">
+				<form class="login100-form validate-form" action="" method="post">
 					<span class="login100-form-title">
 						Halaman Register
 					</span>
@@ -60,7 +76,7 @@
 					</div>
 					
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
+						<button class="login100-form-btn" type="submit" name="register">
 							Register
 						</button>
 					</div>
