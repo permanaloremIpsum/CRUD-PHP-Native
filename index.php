@@ -5,11 +5,21 @@ if(!isset($_SESSION["login"])){
   header("Location: login.php");
   exit;
 }
+
 require 'functions.php';
-$mahasiswa = query("SELECT * FROM mahasiswa");
+
+// pagination
+$jumlahDataPerhalaman = 5;
+$jumlahData = count(query("SELECT * FROM mahasiswa"));
+$jumlahHalaman = ceil($jumlahData / $jumlahDataPerhalaman);
+$halamanAktif = (isset($_GET["page"])) ? $halamanAktif = $_GET["page"] : 1;
+$awalData = ($jumlahDataPerhalaman * $halamanAktif) - $jumlahDataPerhalaman;
+
+//$mahasiswa = query("SELECT * FROM mahasiswa ORDER BY id DESC")
+$mahasiswa = query("SELECT * FROM mahasiswa LIMIT $awalData, $jumlahDataPerhalaman");
 
 //jika tombol cari ditekan
-if(isset($_POST["cari"])) {
+if (isset($_POST["cari"])) {
   $mahasiswa = cari($_POST["keyword"]);
 }
 ?>
@@ -256,14 +266,25 @@ if(isset($_POST["cari"])) {
                       <div class="col-lg-6 col-md-6 col-sm-6">
                         <div style="margin-top: -25px; margin-bottom: -15px;" class="dataTables_paginate paging_simple_numbers" id="datatable_paginate">
                             <ul class="pagination">
-                              <li class="paginate_button previous disabled" id="datatable_previous"><a href="#" aria-controls="datatable" data-dt-idx="0" tabindex="0">Previous</a></li>
-                              <li class="paginate_button active"><a href="#" aria-controls="datatable" data-dt-idx="1" tabindex="0">1</a></li>
-                              <li class="paginate_button "><a href="#" aria-controls="datatable" data-dt-idx="2" tabindex="0">2</a></li>
-                              <li class="paginate_button "><a href="#" aria-controls="datatable" data-dt-idx="3" tabindex="0">3</a></li>
-                              <li class="paginate_button "><a href="#" aria-controls="datatable" data-dt-idx="4" tabindex="0">4</a></li>
-                              <li class="paginate_button "><a href="#" aria-controls="datatable" data-dt-idx="5" tabindex="0">5</a></li>
-                              <li class="paginate_button "><a href="#" aria-controls="datatable" data-dt-idx="6" tabindex="0">6</a></li>
-                              <li class="paginate_button next" id="datatable_next"><a href="#" aria-controls="datatable" data-dt-idx="7" tabindex="0">Next</a></li>
+                              <?php if($halamanAktif > 1) : ?>
+                                <li class="paginate_button previous" id="datatable_previous"><a href="?page=<?= $halamanAktif - 1 ?>" aria-controls="datatable" data-dt-idx="0" tabindex="0">Previous</a></li>
+                              <?php else : ?>
+                                <li class="paginate_button previous disabled" id="datatable_previous"><a href="#" aria-controls="datatable" data-dt-idx="0" tabindex="0" disabled>Previous</a></li>
+                              <?php endif; ?>
+
+                              <?php for($i = 1; $i <= $jumlahHalaman; $i++) : ?>
+                                <?php if($i == $halamanAktif) : ?>
+                                 <li class="paginate_button active"><a href="?page=<?= $i ?>" aria-controls="datatable" tabindex="0"><?= $i ?></a></li>
+                                <?php else : ?>
+                                  <li class="paginate_button "><a href="?page=<?= $i ?>" aria-controls="datatable" tabindex="0"><?= $i ?></a></li>
+                                <?php endif; ?>
+                              <?php endfor; ?>
+                              
+                              <?php if($halamanAktif < $jumlahHalaman) : ?>
+                                <li class="paginate_button next" id="datatable_next"><a href="?page=<?= $halamanAktif + 1 ?>" aria-controls="datatable" data-dt-idx="7" tabindex="0">Next</a></li>
+                              <?php else : ?>
+                                <li class="paginate_button next disabled" id="datatable_next"><a href="#" aria-controls="datatable" data-dt-idx="7" tabindex="0" disabled>Next</a></li>
+                              <?php endif; ?>
                             </ul>
                           </div>
                       </div>
